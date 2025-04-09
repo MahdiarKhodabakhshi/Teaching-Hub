@@ -2,10 +2,10 @@
 
 int main() {
     FILE *in; //# File pointer for input
+    //# Why do we use a pointer variable for handling a file?
     char island[100];
 
-    //# Open a file
-    in = fopen("fscanf_vs_fgets_test.txt", "r");
+    in = fopen("fscanf_vs_fgets_test.txt", "r"); //# The reason is that fopen() returns a pointer to the file stream.
     if (in == NULL) {
         perror("Error opening file");
         return 1;
@@ -15,7 +15,8 @@ int main() {
     fscanf(in, "%s", island);
     printf("Using fscanf, read from file: %s\n", island);
 
-    //# Reset file pointer and use fgets to read the whole line from file
+    //# Since fscanf has already read some data, the pointer is not at the beginning.
+    // #rewind ensures that the next read operation starts from the beginning.
     rewind(in);
     fgets(island, 100, in);
     printf("Using fgets, read from file: %s", island);
